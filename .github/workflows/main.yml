@@ -26,29 +26,36 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
 
-    - name: Install Bubblewrap
-      run: npm install -g @bubblewrap/cli
+    - name: Install Cordova
+      run: npm install -g cordova
 
-    - name: Configure Bubblewrap Paths
+    - name: Create Project & Build APK/AAB
       run: |
-        mkdir -p ~/.bubblewrap
-        echo '{"jdkPath":"'"$JAVA_HOME"'","androidSdkPath":"'"$ANDROID_HOME"'"}' > ~/.bubblewrap/config.json
+        # 1. Ek naya Cordova project banayein
+        cordova create game_project com.sumit.cricketmanager "Cricket League Manager"
+        
+        # 2. Project folder ke andar jayein
+        cd game_project
+        
+        # 3. Default files delete karke apni index.html copy karein
+        rm -rf www/*
+        cp ../index.html www/
+        
+        # 4. Android platform add karein
+        cordova platform add android --no-telemetry
+        
+        # 5. Testing ke liye APK build karein (Debug)
+        cordova build android --no-telemetry
+        
+        # 6. Play Store ke liye AAB bundle build karein (Release)
+        cordova build android --release -- --packageType=bundle --no-telemetry
 
-    - name: Initialize App Project
-      run: |
-        # Yahan humne domain override kar diya hai taaki Invalid URL error na aaye
-        bubblewrap init --manifest=manifest.json --meta-validate=false --interactive=false --host=localhost --pagePath=/index.html
-
-    - name: Build APK and AAB files
-      run: |
-        bubblewrap build --skipSigning
-
-    - name: Upload Files to GitHub
+    - name: Upload APK and AAB to GitHub
       uses: actions/upload-artifact@v4
       with:
         name: Android-Game-Builds
         path: |
-          *.apk
-          *.aab
+          game_project/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+          game_project/platforms/android/app/build/outputs/bundle/release/app-release.aab
