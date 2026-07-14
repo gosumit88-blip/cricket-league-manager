@@ -33,13 +33,13 @@ jobs:
 
     - name: Configure Bubblewrap Paths
       run: |
-        # Bubblewrap ko bina pooche bata rahe hain ki Java aur Android SDK kahan hain
         mkdir -p ~/.bubblewrap
         echo '{"jdkPath":"'"$JAVA_HOME"'","androidSdkPath":"'"$ANDROID_HOME"'"}' > ~/.bubblewrap/config.json
 
     - name: Initialize App Project
       run: |
-        bubblewrap init --manifest=manifest.json --meta-validate=false --interactive=false
+        # Yahan humne domain override kar diya hai taaki Invalid URL error na aaye
+        bubblewrap init --manifest=manifest.json --meta-validate=false --interactive=false --host=localhost --pagePath=/index.html
 
     - name: Build APK and AAB files
       run: |
