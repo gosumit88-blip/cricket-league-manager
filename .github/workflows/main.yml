@@ -20,6 +20,9 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v3
+
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
@@ -28,10 +31,15 @@ jobs:
     - name: Install Bubblewrap
       run: npm install -g @bubblewrap/cli
 
+    - name: Configure Bubblewrap Paths
+      run: |
+        # Bubblewrap ko bina pooche bata rahe hain ki Java aur Android SDK kahan hain
+        mkdir -p ~/.bubblewrap
+        echo '{"jdkPath":"'"$JAVA_HOME"'","androidSdkPath":"'"$ANDROID_HOME"'"}' > ~/.bubblewrap/config.json
+
     - name: Initialize App Project
       run: |
-        # Sawaal pucchne se bachne ke liye ye setup zaroori hai
-        echo "yes" | bubblewrap init --manifest=manifest.json --meta-validate=false --interactive=false || true
+        bubblewrap init --manifest=manifest.json --meta-validate=false --interactive=false
 
     - name: Build APK and AAB files
       run: |
