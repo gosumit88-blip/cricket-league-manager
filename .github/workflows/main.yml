@@ -1,0 +1,39 @@
+name: Build Android APK and AAB
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Bubblewrap
+      run: npm install -g @bubblewrap/cli
+
+    - name: Initialize App Project
+      run: |
+        bubblewrap init --manifest=manifest.json --meta-validate=false --interactive=false
+
+    - name: Build APK and AAB files
+      run: |
+        bubblewrap build --skipSigning
+
+    - name: Upload Files to GitHub
+      uses: actions/upload-artifact@v4
+      with:
+        name: Android-Game-Builds
+        path: |
+          *.apk
+          *.aab
