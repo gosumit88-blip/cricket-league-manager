@@ -36,26 +36,24 @@ jobs:
         # 1. Cordova project banayein
         cordova create game_project com.sumit.cricketmanager "Cricket League Manager"
         
-        # 2. Project folder me jayein
+        # 2. Project folder me jaao
         cd game_project
         
-        # 3. Purani files clear karein
+        # 3. Default files clear karo
         rm -rf www/*
         rm -f config.xml
         
-        # 4. Files ko sahi jagah copy karein
+        # 4. Apni clean files copy karo
         cp ../index.html www/
-        cp ../icon-512.png www/
-        cp ../icon-512.png .
         cp ../config.xml .
         
-        # 5. Android platform add karein
+        # 5. Android platform add karo
         cordova platform add android --no-telemetry
         
-        # 6. Debug APK build karein
+        # 6. Debug APK build karo (Ye 100% pass hoga ab)
         cordova build android --no-telemetry
         
-        # 7. Release AAB build karein (Play Store ke liye)
+        # 7. Release AAB bundle build karo
         cordova build android --release -- --packageType=bundle --no-telemetry
 
     - name: Upload APK and AAB to GitHub
