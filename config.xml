@@ -9,7 +9,10 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     
-    <icon src="icon-512.png" />
+    <!-- Android ke liye icon configuration -->
+    <platform name="android">
+        <icon src="icon-512.png" />
+    </platform>
     
     <preference name="Orientation" value="portrait" />
 </widget>
