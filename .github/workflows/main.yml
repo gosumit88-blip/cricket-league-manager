@@ -39,17 +39,22 @@ jobs:
         # 2. Project folder ke andar jayein
         cd game_project
         
-        # 3. Default files delete karke apni index.html copy karein
+        # 3. Default config aur files delete karein
         rm -rf www/*
-        cp ../index.html www/
+        rm -f config.xml
         
-        # 4. Android platform add karein
+        # 4. Apni config.xml, index.html aur icon-512.png copy karein
+        cp ../index.html www/
+        cp ../icon-512.png .
+        cp ../config.xml .
+        
+        # 5. Android platform add karein
         cordova platform add android --no-telemetry
         
-        # 5. Testing ke liye APK build karein (Debug)
+        # 6. Testing ke liye APK build karein (Debug)
         cordova build android --no-telemetry
         
-        # 6. Play Store ke liye AAB bundle build karein (Release)
+        # 7. Play Store ke liye AAB bundle build karein (Release)
         cordova build android --release -- --packageType=bundle --no-telemetry
 
     - name: Upload APK and AAB to GitHub
