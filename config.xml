@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.sumit.cricketmanager" version="1.0.0" xmlns="http://cordova.apache.org/ns/1.0" xmlns:cdv="http://cordova.apache.org/ns/1.0/1.0">
+    <name>Cricket League Manager</name>
+    <description>Cricket League Manager Game</description>
+    <author email="developer@example.com" href="http://example.com">Sumit Sinha</author>
+    
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    
+    <icon src="icon-512.png" />
+    
+    <preference name="Orientation" value="portrait" />
+</widget>
